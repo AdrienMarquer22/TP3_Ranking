@@ -1,7 +1,7 @@
 from ranking.ranking import Ranking
 
 if __name__=="__main__":
-    test=Ranking("chicago wikipédia",'or')
+    test=Ranking("chicago wikipédia",'or','bm25')
     test.load_index()
     test.load_documents()
 

@@ -18,18 +18,22 @@ def linear_function(query,doc,index):
     distance = 0
     i=0
     for token in query:
-        if doc in index[token]:
-            # count weight
-            score += index[token][doc]["count"] - 1
-            ##distance
-            distance += np.min([abs(i-x) for x in index[token][doc]["positions"]])
+        try:  # if the token is not in any doc
+            if doc in index[token]:
+                # count weight
+
+                score += index[token][doc]["count"] -1
+                ##distance
+                distance += np.min([abs(i-x) for x in index[token][doc]["positions"]])
+                i+=1
+                ##stopword
+                if token not in stop_words:
+                    score += 2
+                else:
+                    score -= 4 # we remove weight because the word isnt in the docs
+                score -= distance
+        except:
             i+=1
-            ##stopword
-            if token not in stop_words:
-                score += 2
-            else:
-                score -= 4 # we remove weight because the word isnt in the docs
-            score -= distance
     return score
 
 
@@ -49,18 +53,14 @@ def bm25(doc, query, index,avg_doc_len,doc_len,N,k1=1.2, b=0.75):
     """
     # Create a dictionary of the words and their frequencies in the document + length of the document
     doc_word_freq = {}
-    len_doc = 500
     for word in query:
-        if doc in  index[word]:
-            doc_word_freq[word] = index[word][doc]["count"]/doc_len
-        else : 
+        try :
+            if doc in  index[word]:
+                doc_word_freq[word] = index[word][doc]["count"]/doc_len
+            else : 
+                doc_word_freq[word] = 0
+        except:
             doc_word_freq[word] = 0
-
-    print(doc_word_freq)
-
-    
-
-    # Calculate the average document
 
    
     # Compute the BM25 score for each word in the query.

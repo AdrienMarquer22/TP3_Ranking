@@ -45,17 +45,20 @@ class Ranking():
     def create_ranking(self):
         self.filter()
         self.ranking={}
-        avg_len_loc = np.mean([len(docu['title'].split()) for docu in self.documents])
+        self.avg_len_loc = np.mean([len(docu['title'].split()) for docu in self.documents])
         N=len(self.documents)
         for doc in self.keys:
             if self.method.lower() == 'linear':
                 self.ranking[doc] = linear_function(self.request_token,doc,self.index) #we remove the number of token to make sure the counn weight dosnt increase with the nmber of words
             elif self.method.lower() == 'bm25':
 
-                doc_len = len(next((item['title'].split() for item in self.documents if item['id'] == int(doc)), []))
-                self.ranking[doc]=bm25(doc,self.request_token,self.index,avg_len_loc,doc_len,N,k1=1.2, b=0.75)
+                doc_len = self.longueur_doc(int(doc))
+                self.ranking[doc]=bm25(doc,self.request_token,self.index,self.avg_len_loc,doc_len,N,k1=1.2, b=0.75)
 
         self.ranking = {k: v for k, v in sorted(self.ranking.items(), key=lambda item: item[1], reverse=True)}
+
+    def longueur_doc(self,id:int):
+        return len(next((item['title'].split() for item in self.documents if item['id'] == id), []))
 
     def result(self):
         self.res={}

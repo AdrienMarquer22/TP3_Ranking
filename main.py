@@ -7,7 +7,7 @@ if __name__=="__main__":
 
 
     test.create_ranking()
-    print(test.ranking)
+    #print(test.ranking)
 
     test.result()
 

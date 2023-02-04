@@ -34,13 +34,14 @@ def linear_function(query,doc,index):
 
 
 
-def bm25(doc, query, index,avg_doc_len,k1=1.2, b=0.75):
+def bm25(doc, query, index,avg_doc_len,doc_len,N,k1=1.2, b=0.75):
     """
     Parameters:
         query (list of str): The query to score against.
         doc (int): The document to score.
         index (dict of dict): The index
         avg_doc_len (float): The average len of document
+        doc_len (float): The len of document
         k1 (float, optional): The k1 parameter, defaults to 1.2.
         b (float, optional): The b parameter, defaults to 0.75.       
     Returns:
@@ -48,12 +49,16 @@ def bm25(doc, query, index,avg_doc_len,k1=1.2, b=0.75):
     """
     # Create a dictionary of the words and their frequencies in the document + length of the document
     doc_word_freq = {}
-    len_doc = 0
-    for word in index:
+    len_doc = 500
+    for word in query:
         if doc in  index[word]:
-            doc_word_freq[word] = index[word][doc]["count"]
-            len_doc += index[word][doc]["count"]
-            
+            doc_word_freq[word] = index[word][doc]["count"]/doc_len
+        else : 
+            doc_word_freq[word] = 0
+
+    print(doc_word_freq)
+
+    
 
     # Calculate the average document
 
@@ -64,7 +69,7 @@ def bm25(doc, query, index,avg_doc_len,k1=1.2, b=0.75):
         if word not in doc_word_freq:
             continue
         freq = doc_word_freq[word]
-        idf = math.log((len_doc - freq + 0.5) / (freq + 0.5))
-        score += idf * (freq * (k1 + 1) / (freq + k1 * (1 - b + b * len_doc / avg_doc_len)))
+        idf = math.log((N - freq + 0.5) / (freq + 0.5))
+        score += idf * (freq * (k1 + 1) / (freq + k1 * (1 - b + b * doc_len / avg_doc_len)))
    
     return score

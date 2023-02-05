@@ -108,4 +108,4 @@ This repository contains two functions for scoring a document against a query: `
 + `bm25`: An implementation of the BM25 scoring function, which is widely used in information retrieval. BM25 is a probabilistic model that scores documents based on the relevance of the query terms in the document and the importance of the terms in the collection.
 
 
-Note: The code you provided is in French, with the stop words set to the French language. If you need it in a different language, you will need to change the `stop_words` variable accordingly.
+Note: The code is provided in French, with the stop words set to the French language. If you need it in a different language, you will need to change the `stop_words` variable accordingly.

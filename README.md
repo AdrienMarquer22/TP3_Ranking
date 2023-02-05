@@ -42,8 +42,7 @@ python3 -m unittest discover test/
 A class for ranking documents based on the input request.
 
  #### Requirements
-+ numpy
-+ json
++ [numpy](https://numpy.org/)
 
 #### Usage
 
@@ -86,9 +85,9 @@ r.save_result("result.json")
 This repository contains two functions for scoring a document against a query: `linear_function` and `bm25`.
 
 #### Requirements
-+ numpy
-+ nltk
-+ nltk stopwords corpus
++ [numpy](https://numpy.org/)
++ [nltk](https://www.nltk.org/)
+
 
 #### Usage
 + Download the nltk stopwords corpus by running `nltk.download('stopwords')`.

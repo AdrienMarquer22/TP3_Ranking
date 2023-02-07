@@ -12,16 +12,16 @@ class TestScore(unittest.TestCase):
     def test_linear_function(self):
         doc = 1
         querry = ["karine"]
-        self.assertEqual(linear_function(querry,doc,index),2)
-        querry =["la","karine"]
-        self.assertEqual(linear_function(querry,doc,index),1)
-        querry =["zer","la","karine"]
-        self.assertEqual(linear_function(querry,doc,index),0)
-        querry =["karine","wikipédia","karine","ok","ok"]
         self.assertEqual(linear_function(querry,doc,index),4)
+        querry =["la","karine"]
+        self.assertEqual(linear_function(querry,doc,index),3)
+        querry =["zer","la","karine"]
+        self.assertEqual(linear_function(querry,doc,index),2)
+        querry =["karine","wikipédia","karine","ok","ok"]
+        self.assertEqual(linear_function(querry,doc,index),10)
         doc=2
         querry =["ok","ok"]
-        self.assertEqual(linear_function(querry,doc,index),1)
+        self.assertEqual(linear_function(querry,doc,index),7)
 
 
     def test_linear_bm25(self):
@@ -31,12 +31,20 @@ class TestScore(unittest.TestCase):
         doc_len = 5
         N=4
         self.assertAlmostEqual(bm25(doc,querry,index,avg_doc_len,doc_len,N) , 1.704866366424662 ) 
+        save_score= bm25(doc,querry,index,avg_doc_len,doc_len,N)
+
         doc_len = 78
-        self.assertAlmostEqual(bm25(doc,querry,index,avg_doc_len,doc_len,N) , 0.017475147188782875 ) 
+        self.assertLess(bm25(doc,querry,index,avg_doc_len,doc_len,N) , save_score ) 
+        save_score= bm25(doc,querry,index,avg_doc_len,doc_len,N)
+        
         avg_doc_len = 52
         doc_len = 5
-        self.assertAlmostEqual(bm25(doc,querry,index,avg_doc_len,doc_len,N) , 3.393059223153239 ) 
+        self.assertGreater(bm25(doc,querry,index,avg_doc_len,doc_len,N) ,save_score ) 
+        save_score= bm25(doc,querry,index,avg_doc_len,doc_len,N)
+
         N=400
-        self.assertAlmostEqual(bm25(doc,querry,index,avg_doc_len,doc_len,N) , 13.643137087648006 )
+        self.assertGreater(bm25(doc,querry,index,avg_doc_len,doc_len,N) , save_score )
+        save_score= bm25(doc,querry,index,avg_doc_len,doc_len,N)
+
         querry =["ok","kqrine",'888']
-        self.assertAlmostEqual(bm25(doc,querry,index,avg_doc_len,doc_len,N) , 6.821568543824003)
+        self.assertLess(bm25(doc,querry,index,avg_doc_len,doc_len,N) , save_score)

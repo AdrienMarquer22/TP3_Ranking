@@ -15,21 +15,31 @@ Launch with the command
 ```bash
 python3 main.py 
     [--request request]
+    [--type type]
     [--linear]
-    [-bm25]
+    [--bm25]
     [--name name]
 ```
 
-There is  arguments to use :
-
-
-
+There is 5 arguments to use :
++ `request` : The querry that you want to execute
++ `type` : The type of filtering `And` or `Or` (default = `And`)
++ `linear` : Score with the linear function (default = `False`)
++ `bm25` : Score with the BM25 function (default = `False`)
++ `name` : The name for the result json file (default = `result`)
 
 
 
 ```bash
 # Launch the tests 
 python3 -m unittest discover test/
+
+python3 main.py --request "Karine Lacombe" --type And --linear
+
+python3 main.py --request "Karine Lacombe Wikipédia" --type or --bm25 --name BM25
+
+python3 main.py --request "Wikipédia Chicago" --type or --name Wikipedia --bm25 --linear
+
 
 
 ```

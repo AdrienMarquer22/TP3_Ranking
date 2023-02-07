@@ -45,11 +45,11 @@ class TestRanking(unittest.TestCase):
     def test_create_ranking(self):
         self.ranking.create_ranking()
         self.assertIsNotNone(self.ranking.ranking)
-        self.assertEqual(2,self.ranking.ranking['0'])
+        self.assertEqual(6,self.ranking.ranking['0'])
 
         self.ranking_or.create_ranking()
         self.assertIsNotNone(self.ranking_or.ranking)
-        self.assertEqual(0,self.ranking_or.ranking['498'])
+        self.assertEqual(2,self.ranking_or.ranking['498'])
 
 
     def test_result(self):

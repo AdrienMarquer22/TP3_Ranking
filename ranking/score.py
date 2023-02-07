@@ -22,7 +22,7 @@ def linear_function(query,doc,index):
             if doc in index[token]:
                 # count weight
 
-                score += index[token][doc]["count"] -1
+                score += index[token][doc]["count"]*2
                 ##distance
                 distance += np.min([abs(i-x) for x in index[token][doc]["positions"]])
                 i+=1

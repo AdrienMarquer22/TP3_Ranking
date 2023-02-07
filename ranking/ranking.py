@@ -64,7 +64,7 @@ class Ranking():
         self.res={}
         for doc in self.ranking:
             docu = [d for d in self.documents if d['id']  == int(doc)]
-            self.res[doc] = {"title": docu[0]["title"],"url":docu[0]["url"]}
+            self.res[doc] = {"title": docu[0]["title"],"url":docu[0]["url"],"score":str(self.ranking[doc])}
 
     def save_result(self,name):
         with open(name, 'w') as outfile:
